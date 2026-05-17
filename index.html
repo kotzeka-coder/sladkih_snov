@@ -168,40 +168,55 @@
       font-weight: 800;
     }
 
-    .timer-wrap {
-      margin: 26px auto 18px;
-      max-width: 880px;
+    .collage-wrap {
+      margin: 28px auto 20px;
+      max-width: 860px;
       position: relative;
       z-index: 2;
     }
 
-    .timer {
+    .collage {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 14px;
     }
 
-    .time-box {
-      background: rgba(255, 255, 255, 0.09);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 24px;
-      padding: 18px 10px;
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    .photo-slot {
+      min-height: 210px;
+      border-radius: 26px;
+      overflow: hidden;
+      position: relative;
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.13), rgba(255, 255, 255, 0.05)),
+        radial-gradient(circle at 30% 20%, rgba(255, 142, 199, 0.18), transparent 42%);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 14px 26px rgba(0, 0, 0, 0.18);
     }
 
-    .time-value {
-      font-size: clamp(28px, 5vw, 54px);
-      font-weight: 900;
-      color: white;
-      line-height: 1;
-      margin-bottom: 8px;
+    .photo-slot img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
 
-    .time-label {
+    .photo-slot.empty::before {
+      content: "фото";
+      position: absolute;
+      inset: 12px;
+      display: grid;
+      place-items: center;
+      border: 1px dashed rgba(255, 255, 255, 0.24);
+      border-radius: 20px;
+      color: rgba(255, 246, 251, 0.58);
       font-size: 13px;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: rgba(255, 246, 251, 0.7);
+    }
+
+    .photo-slot:nth-child(1),
+    .photo-slot:nth-child(4) {
+      transform: translateY(12px);
     }
 
     .note {
@@ -349,12 +364,19 @@
         border-radius: 28px;
       }
 
-      .timer {
+      .collage {
         grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
       }
 
-      .time-box {
+      .photo-slot {
+        min-height: 170px;
         border-radius: 20px;
+      }
+
+      .photo-slot:nth-child(1),
+      .photo-slot:nth-child(4) {
+        transform: none;
       }
 
       .btns {
@@ -376,35 +398,31 @@
       <div class="badge">для той маленькой девочки которая сейчас спит</div>
       <h1>Сладких снов, <span class="accent">Миледи 😘</span> 💫</h1>
       <p class="lead">
-        Вы уснули, потому что злодеи триклятые вас измотали. А вам нужно отдохнуть к Пятнице
-        <strong>24 апреля, 18:00</strong>
-        ведь Вам нужно прибыть в ВоронЕжский уезд 😏
+        Все таки получилось у вас провернуть этот не легкий моневр и приехать 
+        <strong>24 апреля 2026</strong>
+        в ВоронЕжский уезд, который все таки оказался не таким и хорошим, но вы его красили 🥰
       </p>
 
-      <div class="timer-wrap">
-        <div class="timer">
-          <div class="time-box">
-            <div class="time-value" id="days">00</div>
-            <div class="time-label">дней</div>
+      <div class="collage-wrap">
+        <div class="collage">
+          <div class="photo-slot">
+            <img src="images/photo-1.jpeg" alt="Фото 1">
           </div>
-          <div class="time-box">
-            <div class="time-value" id="hours">00</div>
-            <div class="time-label">часов</div>
+          <div class="photo-slot">
+            <img src="images/photo-2.jpeg" alt="Фото 2">
           </div>
-          <div class="time-box">
-            <div class="time-value" id="minutes">00</div>
-            <div class="time-label">минут</div>
+          <div class="photo-slot">
+            <img src="images/photo-3.jpeg" alt="Фото 3">
           </div>
-          <div class="time-box">
-            <div class="time-value" id="seconds">00</div>
-            <div class="time-label">секунд</div>
+          <div class="photo-slot">
+            <img src="images/photo-4.jpeg" alt="Фото 4">
           </div>
         </div>
       </div>
 
       <p class="note">
-        Осталось совсем немного до момента, когда Ваша <b>красивая попа</b>
-        официально попадёт под моё самое заинтересованное внимание 😌
+        Всетаки дождались того момента, когда твоя <b>красивая попа</b>
+        официально попала под моё самое заинтересованное внимание 😌
       </p>
 
       <div class="btns">
@@ -420,20 +438,12 @@
   <script>
     const targetDate = new Date('2026-04-24T18:00:00+03:00');
 
-    const daysEl = document.getElementById('days');
-    const hoursEl = document.getElementById('hours');
-    const minutesEl = document.getElementById('minutes');
-    const secondsEl = document.getElementById('seconds');
     const moscowNowEl = document.getElementById('moscowNow');
     const hearts = document.getElementById('hearts');
     const burstBtn = document.getElementById('burstBtn');
     const moreHeartsBtn = document.getElementById('moreHeartsBtn');
     const card = document.getElementById('card');
     const effectLayer = document.getElementById('effectLayer');
-
-    function pad(num) {
-      return String(num).padStart(2, '0');
-    }
 
     function getMoscowNow() {
       return new Date();
@@ -476,40 +486,6 @@
       };
     }
 
-    function updateTimer() {
-      const now = getMoscowNow();
-      const moscowParts = getMoscowTimeParts(now);
-      const nowMoscowTimestamp = Date.UTC(
-        moscowParts.year,
-        moscowParts.month - 1,
-        moscowParts.day,
-        moscowParts.hour - 3,
-        moscowParts.minute,
-        moscowParts.second
-      );
-      const diff = targetDate.getTime() - nowMoscowTimestamp;
-
-      if (diff <= 0) {
-        daysEl.textContent = '00';
-        hoursEl.textContent = '00';
-        minutesEl.textContent = '00';
-        secondsEl.textContent = '00';
-        moscowNowEl.textContent = 'Московское время: ' + formatMoscowDate(now) + ' — пора 😏';
-        return;
-      }
-
-      const totalSeconds = Math.floor(diff / 1000);
-      const days = Math.floor(totalSeconds / 86400);
-      const hours = Math.floor((totalSeconds % 86400) / 3600);
-      const minutes = Math.floor((totalSeconds % 3600) / 60);
-      const seconds = totalSeconds % 60;
-
-      daysEl.textContent = pad(days);
-      hoursEl.textContent = pad(hours);
-      minutesEl.textContent = pad(minutes);
-      secondsEl.textContent = pad(seconds);
-      moscowNowEl.textContent = 'Московское время: ' + formatMoscowDate(now);
-    }
 
     function makeHeart() {
       const el = document.createElement('div');
@@ -566,8 +542,6 @@
 
     spawnHearts(16);
     setInterval(makeHeart, 1200);
-    updateTimer();
-    setInterval(updateTimer, 1000);
   </script>
 </body>
 </html>
